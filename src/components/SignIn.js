@@ -1,32 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../service/firebaseConfig";
+import { Navigate } from "react-router-dom";
 
 const SignIn = () => {
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await signInWithEmailAndPassword(auth, signInEmail, signInPassword);
+    } catch (error) {
+      alert("メールアドレス、パスワードのどちらかまたは両方が間違っています。");
+    }
+  };
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    })
+  },[]);
+
   return (
     <>
-      <h1>サインインページ</h1>
-      <form>
-        <div>
-          <label>メールアドレス</label>
-          <input
-            name="email"
-            type="email"
-            value={signInEmail}
-            onChange={e => setSignInEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>パスワード</label>
-          <input
-            name="password"
-            type="password"
-            value={signInPassword}
-            onChange={e => setSignInPassword(e.target.value)}
-          />
-        </div>
-        <button>SignIn</button>
-      </form>
+      {user ? (
+        <Navigate to={`/`} />
+      ) : (
+        <>
+          <h1>サインインページ</h1>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>メールアドレス</label>
+              <input
+                name="email"
+                type="email"
+                value={signInEmail}
+                onChange={(e) => setSignInEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>パスワード</label>
+              <input
+                name="password"
+                type="password"
+                value={signInPassword}
+                onChange={(e) => setSignInPassword(e.target.value)}
+              />
+            </div>
+            <button>SignIn</button>
+          </form>
+        </>
+      )}
     </>
   );
 };
