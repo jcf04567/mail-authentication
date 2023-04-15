@@ -5,10 +5,12 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const Main = () => {
   const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
   }, []);
 
@@ -20,13 +22,17 @@ const Main = () => {
   };
   return (
     <>
-      {!user ? (
-        <Navigate to={`/SignIn/`} />
-      ) : (
+      {!loading && (
         <>
-          <h1>Main page</h1>
-          <h2>{user?.email}</h2>
-          <button onClick={_signOut}>SignOut</button>
+          {!user ? (
+            <Navigate to={`/SignIn/`} />
+          ) : (
+            <>
+              <h1>Main page</h1>
+              <h2>{user?.email}</h2>
+              <button onClick={_signOut}>SignOut</button>
+            </>
+          )}
         </>
       )}
     </>

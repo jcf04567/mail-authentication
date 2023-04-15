@@ -4,11 +4,11 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../service/firebaseConfig";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const SignUp = () => {
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,8 +16,8 @@ const SignUp = () => {
     try {
       await createUserWithEmailAndPassword(
         auth,
-        registerEmail,
-        registerPassword
+        signupEmail,
+        signupPassword
       );
     } catch (error) {
       alert("入力が不正です");
@@ -45,8 +45,8 @@ const SignUp = () => {
               <input
                 name="email"
                 type="email"
-                value={registerEmail}
-                onChange={(e) => setRegisterEmail(e.target.value)}
+                value={signupEmail}
+                onChange={(e) => setSignupEmail(e.target.value)}
               />
             </div>
             <div>
@@ -54,11 +54,12 @@ const SignUp = () => {
               <input
                 name="password"
                 type="password"
-                value={registerPassword}
-                onChange={(e) => setRegisterPassword(e.target.value)}
+                value={signupPassword}
+                onChange={(e) => setSignupPassword(e.target.value)}
               />
             </div>
             <button>SignUp</button>
+            <p>SignInは<Link to={`/SignIn/`}>こちら</Link></p>
           </form>
         </>
       )}

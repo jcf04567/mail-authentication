@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../service/firebaseConfig";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const SignIn = () => {
   const [signInEmail, setSignInEmail] = useState("");
@@ -51,6 +51,7 @@ const SignIn = () => {
               />
             </div>
             <button>SignIn</button>
+            <p>新規登録は<Link to={`/SignUp`}>こちら</Link></p>
           </form>
         </>
       )}
