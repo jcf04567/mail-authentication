@@ -5,7 +5,7 @@ const SignIn = () => {
   const [signInPassword, setSignInPassword] = useState("");
   return (
     <>
-      <h1>ログインページ</h1>
+      <h1>サインインページ</h1>
       <form>
         <div>
           <label>メールアドレス</label>

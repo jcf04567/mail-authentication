@@ -27,8 +27,8 @@ const SignUp = () => {
   const [user, setUser] = useState("");
 
   useEffect(() => {
-    onAuthStateChanged(auth, async (currentUser) => {
-      await setUser(currentUser);
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
     });
   }, []);
 
